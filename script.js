@@ -6,7 +6,8 @@ var app = new Vue({
 	  bingResults2: [],
 	  bingResults3: [],
 	  bingResultsAll: [],
-      bingSearchTerm: ""
+      bingSearchTerm: "",
+	  image2: ""
     },
     methods: {
         startWorker: function() {
@@ -34,6 +35,10 @@ var app = new Vue({
 				this.bingResults3 = [imageUrls[6], imageUrls[7], imageUrls[8]];
 				this.bingResultsAll = [this.bingResults1, this.bingResults2, this.bingResults3];
 			});
+		},
+		selectImage: function(img){
+            this.image2 = img.srcElement.src;
+			alert(this.image2);
 		}
     }
-})
+});
