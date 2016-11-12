@@ -20,6 +20,9 @@ function makeQuery(searchTerm, numResults, offset, callback) {
 function getJSON(e) {
 	// State 4 = DONE, status 200 = success
 	if (xhr.readyState == 4 && xhr.status == 200) {
+		if (imageUrls.length != 0) {
+			imageUrls = [];
+		}
 		var response = JSON.parse(xhr.responseText);
 		// Prevent multiple DONE states from triggering.
 		xhr.onreadystatechange = null;

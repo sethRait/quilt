@@ -27,8 +27,10 @@
                                 <button type="button" class="btn btn-default" v-on:click="bingIt">Search for images</button>
                             </div>
 
-                            <div class="bingResults" v-for="url in bingResults">
-                                <img class="img-responsive" v-bind:src="url"></img>
+							<div class="row" v-for="resultRow in bingResultsAll">
+                            	<div class="bingResults col-md-4" v-for="url in resultRow">
+                                	<img class="img-responsive" v-bind:src="url"></img>
+								</div>
                             </div>
                         </div>
                     </div>

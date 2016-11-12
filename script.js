@@ -2,7 +2,10 @@ var app = new Vue({
     el: '#app',
     data: {
       message: 'Hello Vue.js!',
-	  bingResults: [],
+	  bingResults1: [],
+	  bingResults2: [],
+	  bingResults3: [],
+	  bingResultsAll: [],
       bingSearchTerm: ""
     },
     methods: {
@@ -25,8 +28,11 @@ var app = new Vue({
             };
         },
 		bingIt: function() {
-			makeQuery(this.bingSearchTerm, 10, 0, () => {
-				this.bingResults = imageUrls;
+			makeQuery(this.bingSearchTerm, 9, 0, () => {
+				this.bingResults1 = [imageUrls[0], imageUrls[1], imageUrls[2]];
+				this.bingResults2 = [imageUrls[3], imageUrls[4], imageUrls[5]];
+				this.bingResults3 = [imageUrls[6], imageUrls[7], imageUrls[8]];
+				this.bingResultsAll = [this.bingResults1, this.bingResults2, this.bingResults3];
 			});
 		}
     }
