@@ -1,0 +1,56 @@
+<html>
+  <head>
+    <title>Texture Synthesis and Transfer</title>
+
+    <script src="textures.js"></script>
+    <script src="bundle.js"></script>
+    <script>
+      // talie_textures/Lemon2.png, 0.5 14 4
+      // talie_textures/Chicken_Nugget2.png 0.6 10 4
+      /*document.addEventListener("DOMContentLoaded", function() {
+      transfer("/talie_textures/Chicken_Nugget2.png", "/images/potato.png", 0.6, 10, 4).then(function(d) {
+      console.log("done!");
+      document.getElementById("dest").getContext("2d").putImageData(d, 0, 0);
+      }).catch((e) => {
+      console.error(e);
+      });
+      });*/
+
+document.addEventListener("DOMContentLoaded", function () {
+// Grab elements, create settings, etc.
+var video = document.getElementById('video');
+
+// Get access to the camera!
+if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    // Not adding `{ audio: true }` since we only want video now
+      navigator.mediaDevices.getUserMedia({ video: true })
+      .then(function(stream) {
+        video.src = window.URL.createObjectURL(stream);
+        video.play();
+    }).catch(function (e) { console.log(e); });
+      }
+
+
+      var canvas = document.getElementById('canvas');
+      var context = canvas.getContext('2d');
+      
+// Trigger photo take
+document.getElementById("snap").addEventListener("click", function() {
+      context.drawImage(video, 0, 0, 320, 240);
+      transferFromCanvas("/images/Food.0010.png", canvas, 0.5,
+      8, 2).then(function(imd) {
+      context.putImageData(imd, 0, 0);
+      console.log("drawn!");
+      }).catch(console.log);
+
+});
+ });
+    </script>
+  </head>
+
+  <body>
+    <video id="video" width="320" height="240" autoplay></video>
+    <button id="snap">Snap Photo</button>
+    <canvas id="canvas" width="320" height="240"></canvas>
+  </body>
+</html>

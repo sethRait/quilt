@@ -8,7 +8,7 @@
       // talie_textures/Lemon2.png, 0.5 14 4
       // talie_textures/Chicken_Nugget2.png 0.6 10 4
       document.addEventListener("DOMContentLoaded", function() {
-      transfer("/talie_textures/Chicken_Nugget2.png", "/images/potato.png", 0.6, 10, 4).then(function(d) {
+      transferFromURL("/talie_textures/Chicken_Nugget2.png", "/images/potato.png", 0.6, 10, 4).then(function(d) {
       console.log("done!");
       document.getElementById("dest").getContext("2d").putImageData(d, 0, 0);
       }).catch((e) => {
