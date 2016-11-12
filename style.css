@@ -78,7 +78,17 @@ canvas {
 
 .img-responsive {
 	overflow: none;
-	padding: 1em;
+	padding: 0.75em;
+	display: inline-block;
+}
+
+#test {
+	width: 256px;
+	height: 256px;
+	display: block;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #app {
@@ -108,4 +118,7 @@ button {
     text-decoration: none;
     display: inline-block;
     font-size: 16px !important;
+.start-button {
+	background-color: #fff;
+	font-weight: bold;
 }
