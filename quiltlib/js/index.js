@@ -71,7 +71,7 @@ function synth() {
 
 window.transfer = transfer;
 
-transfer("/images/Bark.0009.png", "/talie_textures/Basket_Ball.png", 0.5, 16, 4).then(function(d) {
+transfer("/images/potato.png", "/talie_textures/Lemon.png", 0.5, 16, 4).then(function(d) {
     console.log("done!");
     document.getElementById("dest").getContext("2d").putImageData(d, 0, 0);
 }).catch((e) => {
