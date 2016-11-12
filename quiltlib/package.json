@@ -1,0 +1,17 @@
+{
+  "name": "textures",
+  "version": "0.0.1",
+  "description": "Texture synthesis and transfer",
+  "main": "js/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ryan Marcus <ryan@ryanmarc.us>",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "browserify": "^13.1.1"
+  },
+  "dependencies": {
+    "q": "^1.4.1"
+  }
+}
