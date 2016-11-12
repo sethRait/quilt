@@ -37,7 +37,9 @@ if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 // Trigger photo take
 document.getElementById("snap").addEventListener("click", function() {
       context.drawImage(video, 0, 0, 320, 240);
-      transferFromCanvas("/images/Food.0010.png", canvas, 0.5,
+      var corro = context.getImageData(0, 0,
+      canvas.width, canvas.height);
+      transferFromCanvas("/images/Food.0010.png", corro, 0.5,
       8, 2).then(function(imd) {
       context.putImageData(imd, 0, 0);
       console.log("drawn!");

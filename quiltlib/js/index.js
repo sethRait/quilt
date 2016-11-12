@@ -44,10 +44,7 @@ function transfer(textureData, imgData, alpha, tileSize, overlap) {
 function transferFromCanvas(textureURL, imgCanvas, alpha, tileSize, overlap) {
     return image_utils.getImage(textureURL)
         .then((d) => {
-            const ctx = imgCanvas.getContext("2d");
-            const corro = ctx.getImageData(0, 0,
-                                           imgCanvas.width,
-                                           imgCanvas.height);
+            const corro = imgCanvas;
             return transfer(d, corro, alpha, tileSize, overlap);
             
         });
