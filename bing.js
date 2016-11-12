@@ -3,7 +3,6 @@ var imageUrls = [];
 var endpoint = "https://api.cognitive.microsoft.com/bing/v5.0/images/search";
 var apiKey = "446fb5ff1b48443b80734e86da4d564c";
 
-makeQuery("cats", 10, 0);
 //shrinkImages();
 
 // Entrypoint.  Returns array of image urls.
@@ -16,8 +15,6 @@ function makeQuery(searchTerm, numResults, offset, callback) {
 		getJSON(e);
 		callback();
 	});
-	xhr.onreadystatechange = getJSON;
-	return imageUrls;
 }
 
 function getJSON(e) {
