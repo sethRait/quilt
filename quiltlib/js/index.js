@@ -71,10 +71,4 @@ function synth() {
 
 window.transfer = transfer;
 
-transfer("/images/potato.png", "/talie_textures/Lemon.png", 0.5, 16, 4).then(function(d) {
-    console.log("done!");
-    document.getElementById("dest").getContext("2d").putImageData(d, 0, 0);
-}).catch((e) => {
-    console.error(e);
-});
 

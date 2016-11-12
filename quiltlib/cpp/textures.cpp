@@ -14,6 +14,11 @@ Texture::Texture(unsigned int width, unsigned int height,
     corro = NULL;
     alpha = 0.5;
 
+    minCorro = 0;
+    maxCorro = 255;
+    minText = 0;
+    maxText = 255;
+
     // set the alpha channel of the image to 255
     for (unsigned int i = 3; i < width * height * 4; i += 4)
         data[i] = 255;
@@ -31,7 +36,36 @@ void Texture::synthesize(uint8_t* dest) {
         dest[i] = 255;
     
     doRandomTiling(dest);
+    
+    /*if (corro != NULL)
+      computeMinMaxLum();*/
+    
     replaceWithBestOverlap(dest, true);
+}
+
+void Texture::computeMinMaxLum() {
+    minCorro = std::numeric_limits<double>::infinity();
+    maxCorro = std::numeric_limits<double>::min();
+    minText = std::numeric_limits<double>::infinity();
+    maxText = std::numeric_limits<double>::min();
+
+    for (unsigned int y = 0; y < destHeight; y++) {
+        for (unsigned int x = 0; x < destWidth; x++) {
+            uint8_t lum = getPixelLum(corro + IMG_INDEX(x, y, 0, destWidth));
+            minCorro = std::min((double)lum, minCorro);
+            maxCorro = std::max((double)lum, maxCorro);
+        }
+    }
+
+    for (unsigned int y = 0; y < height; y++) {
+        for (unsigned int x = 0; x < width; x++) {
+            uint8_t lum = getPixelLum(data + IMG_INDEX(x, y, 0, width));
+            minText = std::min((double)lum, minText);
+            maxText = std::max((double)lum, maxText);
+        }
+    }
+
+    printf("%f %f %f %f\n", minCorro, maxCorro, minText, maxText);
 }
 
 
@@ -85,8 +119,8 @@ void Texture::replaceWithBestOverlap(uint8_t* dest, bool doCut) {
     if (corro == NULL)
         return;
     
-    for (int y = 0; y < destHeight; y++) {
-        for (int x = 0; x < destWidth; x++) {
+    for (unsigned int y = 0; y < destHeight; y++) {
+        for (unsigned int x = 0; x < destWidth; x++) {
             if (corro[IMG_INDEX(x, y, 0, destWidth)] > 240 &&
                 corro[IMG_INDEX(x, y, 1, destWidth)] > 240 &&
                 corro[IMG_INDEX(x, y, 2, destWidth)] > 240) {
@@ -180,6 +214,10 @@ double Texture::measureErrorForTile(uint8_t* dest,
 
         for (unsigned int y = 0; y < tileSize - overlap; y++) {
             for (unsigned int x = 0; x < tileSize - overlap; x++) {
+                if (destX + x >= destWidth
+                    || destY + increm + y >= destHeight)
+                    continue;
+                
                 double sourceLum = getPixelLum(data + IMG_INDEX(replacementX + x,
                                                                 replacementY + y,
                                                                 0, width));
@@ -187,6 +225,13 @@ double Texture::measureErrorForTile(uint8_t* dest,
                 double mapLum = getPixelLum(corro + IMG_INDEX(destX + x, destY + y,
                                                              0, destWidth));
 
+                // scale both based on the min and the max
+                sourceLum = (sourceLum - minText) / (maxText - minText);
+                mapLum = (mapLum - minCorro) / (maxCorro - minCorro);
+                sourceLum *= 255.0;
+                mapLum *= 255.0;
+
+                
                 corrospAccum += (sourceLum - mapLum) * (sourceLum - mapLum);
             }
         }

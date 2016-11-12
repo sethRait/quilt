@@ -4,6 +4,16 @@
 
     <script src="textures.js"></script>
     <script src="bundle.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+      transfer("/images/Bark.0009.png", "/images/pear.png", 0.8, 24, 6).then(function(d) {
+      console.log("done!");
+      document.getElementById("dest").getContext("2d").putImageData(d, 0, 0);
+      }).catch((e) => {
+      console.error(e);
+      });
+      });
+    </script>
   </head>
 
   <body>
