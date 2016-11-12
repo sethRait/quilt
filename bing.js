@@ -7,12 +7,15 @@ makeQuery("cats", 10, 0);
 //shrinkImages();
 
 // Entrypoint.  Returns array of image urls.
-function makeQuery(searchTerm, numResults, offset) {
+function makeQuery(searchTerm, numResults, offset, callback) {
 	var query = "?q=" + searchTerm + "&count=" + numResults + "&offset=" + offset;
 	xhr.open('GET', endpoint+query, true);
 	xhr.setRequestHeader("Ocp-Apim-Subscription-key", apiKey);
 	xhr.send();
-	xhr.addEventListener("readystatechange", getJSON, false);
+	xhr.addEventListener("readystatechange", function(e) {
+		getJSON(e);
+		callback();
+	});
 	xhr.onreadystatechange = getJSON;
 	return imageUrls;
 }
@@ -26,16 +29,14 @@ function getJSON(e) {
 		response.value.forEach(function(image) {
 			imageUrls.push(image.contentUrl);
 		});
-		shrinkImages(response);
+	//	shrinkImages(response);
 	}
 }
 
 function shrinkImages(response) {
-	//imageUrls.forEach(function(idx) {
 	for (var i = 0; i < response.value.length; i++) {
 		var img = document.createElement('img');
 		img.src = imageUrls[i];
-		console.log("(w, h): " + img.width + " " + img.height);
 		var scale = findScale(response.value[i].width, response.value[i].height);
 		img.width = scale[0];
 		img.height = scale[1];
@@ -44,14 +45,12 @@ function shrinkImages(response) {
 }
 
 function findScale(width, height) {
-	console.log("(w, h): " + width + " " + height);
 	var x = Math.max(width, height);
 	var y = Math.min(width, height);
 	// flip x width and height if the width isn't the long side
 	var flip = (width != x);
 	y = (350 * y) / x;
 	x = 350;
-	console.log("(x, y): " + x + " " + y);
 	if (!flip) {
 		return [x, y];
 	}
