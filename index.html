@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>title</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+  <script src="http://intridea.github.io/sketch.js/lib/sketch.min.js"></script>
+
+
+
+  </head>
+  <body>
+        <div id="app">
+            <p> {{ message }} </p>
+            <button v-on:click="startWorker"> Start Worker </button>
+            <canvas id="simple_sketch" width="800" height="300"></canvas>
+
+
+        </div>
+    </body>
+    <script src="script.js"></script>
+    <script type="text/javascript">
+          $(function() {
+            $('#simple_sketch').sketch();
+          });
+    </script>
+
+</html>
