@@ -17,7 +17,13 @@
   <body>
     <div id="app">
 
-      <div v-show="waiting" id="plzw8"><h1>BOLD YOUR COURSES!</h1></div>
+      <div v-show="waiting" id="plzw8">
+        <h1>BOLD YOUR COURSES!</h1>
+        <img :src="textureURL">
+        <canvas id="photo" width="320" height="240"></canvas>
+        <canvas id="test" width="400" height="300"></canvas> 
+        <button v-on:click="dismiss()">Dismiss</button>
+      </div>
       
       <div class="row">
         <div class="col-md-6">
@@ -48,26 +54,27 @@
                     <button type="button" class="btn btn-default" v-on:click="bingIt">Search for images</button>
                   </div>
 
-                  <div class="row" v-for="resultRow in bingResultsAll">
-                    <div class="bingResults col-md-4" v-for="url in resultRow">
-		      <img v-on:click="selectImage" class="img-responsive" v-bind:src="url" :id="url">
+                  <div class="row" v-for="(resultRow, idx1) in bingResultsAll">
+                    <div class="bingResults col-md-4" v-for="(url, idx2) in resultRow">
+		      <img :id="idx1 + 'x' + idx2"
+                           v-on:click="selectImage(idx1 + 'x' + idx2)"
+                           class="img-responsive" v-bind:src="url" :id="url">
                     </div>
                   </div>
                 </div>
 
               </div>
               <div id="webcammenu" class="tab-pane fade">
-                <h3>Menu 2</h3>
-                <p>Some content in menu 2.</p>
+                <h3>Your face!</h3>
+                <video id="video" width="320" height="240" autoplay></video>
+                <button id="snap" v-on:click="takePhoto">Snap Photo</button>
+               
               </div>
             </div>
           </div>
         </div>
       </div>
       
-      <button v-on:click="startWorker"> Start Worker </button>
-      <!--<canvas id="simple_sketch" width="800" height="300"></canvas>-->
-      <canvas id="test" width="800" height="800"></canvas> 
     </div>
   </body>
   <script src="script.js"></script>

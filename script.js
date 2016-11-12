@@ -8,13 +8,14 @@ var app = new Vue({
 	bingResultsAll: [],
         bingSearchTerm: "",
 	image2: "",
-        waiting: false
+        waiting: false,
+        textureURL: "/quiltlib/images/Fabric.0005.png"
     },
     methods: {
-        startWorker: function() {
+        startWorker: function(opts) {
             this.waiting = true;
             console.log("set waiting to true!");
-            setTimeout(() => { this.doTransfer(); }, 1000);
+            setTimeout(() => { this.doTransfer(opts); }, 1000);
         },
         
 	bingIt: function() {
@@ -26,23 +27,78 @@ var app = new Vue({
 	    });
 	},
 
-        doTransfer: function() {
+        dismiss: function () {
+            this.waiting = false;
+        },
+        
+        doTransfer: function(opts) {
             console.log("Doing transfer!");
             let ctx = document.getElementById("test").getContext("2d");
-            transferFromURL("/quiltlib/images/Fabric.0001.png",
-                            "/quiltlib/images/soapy.png",
-                            0.5, 16, 4)
-                .then((e) => {
-                    ctx.putImageData(e, 0, 0);
-                    this.waiting = false;
-                }).catch(console.log);
+
+            if (opts.type == "canvas") {
+                transferFromCanvas(this.textureURL,
+                                   opts.imgData, 0.6, 12, 4)
+                    .then((e) => {
+                        ctx.putImageData(e, 0, 0);
+                    }).catch(console.log);
+                
+            } else if (opts.type == "urls") {
+                transferFromURL(this.textureURL,
+                                "/quiltlib/images/soapy.png",
+                                0.5, 16, 4)
+                    .then((e) => {
+                        ctx.putImageData(e, 0, 0);
+                    }).catch(console.log);
+            }
             
         },
         
-	selectImage: function(img){
-            this.image2 = img.srcElement.src;
-	    alert(this.image2);
-	}
+	selectImage: function(id){
+            var img = document.getElementById(id);
+
+            var canvas = document.createElement('canvas');
+            var context = canvas.getContext('2d');
+
+            canvas.width = img.width;
+            canvas.height = img.height;
+            context.drawImage(img, 0, 0 );
+            var corro = context.getImageData(0, 0, img.width, img.height);
+            
+            this.startWorker({"type": canvas,
+                              "imgData": corro});
+	},
+
+        takePhoto: function() {
+            
+            var video = document.getElementById('video');
+            var canvas = document.getElementById('photo');
+            var context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, 320, 240);
+            var corro = context.getImageData(0, 0,
+                                             canvas.width, canvas.height);
+            
+            this.startWorker({"type": "canvas",
+                              "imgData": corro});
+        }
+
+    },
+
+    mounted: function () {
+        // Grab elements, create settings, etc.
+        var video = document.getElementById('video');
+        
+        // Get access to the camera!
+        if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function(stream) {
+                    console.log("attaching video!");
+                    video.src = window.URL.createObjectURL(stream);
+                    video.play();
+                    console.log("attached!");
+                }).catch(function (e) { console.log(e); });
+        }
 
     }
+
+
 });

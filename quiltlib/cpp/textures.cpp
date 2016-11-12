@@ -121,9 +121,9 @@ void Texture::replaceWithBestOverlap(uint8_t* dest, bool doCut) {
     
     for (unsigned int y = 0; y < destHeight; y++) {
         for (unsigned int x = 0; x < destWidth; x++) {
-            if (corro[IMG_INDEX(x, y, 0, destWidth)] > 240 &&
-                corro[IMG_INDEX(x, y, 1, destWidth)] > 240 &&
-                corro[IMG_INDEX(x, y, 2, destWidth)] > 240) {
+            if (corro[IMG_INDEX(x, y, 0, destWidth)] > 245 &&
+                corro[IMG_INDEX(x, y, 1, destWidth)] > 245 &&
+                corro[IMG_INDEX(x, y, 2, destWidth)] > 245) {
 
                 dest[IMG_INDEX(x, y, 0, destWidth)] = 255;
                 dest[IMG_INDEX(x, y, 1, destWidth)] = 255;
