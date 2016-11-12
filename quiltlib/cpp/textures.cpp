@@ -13,6 +13,10 @@ Texture::Texture(unsigned int width, unsigned int height,
 
     corro = NULL;
     alpha = 0.5;
+
+    // set the alpha channel of the image to 255
+    for (unsigned int i = 3; i < width * height * 4; i += 4)
+        data[i] = 255;
     
 }
 
@@ -22,6 +26,10 @@ void Texture::setDestDimensions(unsigned int dW, unsigned int dH) {
 }
 
 void Texture::synthesize(uint8_t* dest) {
+   // set the alpha channel of the image to 255
+    for (unsigned int i = 3; i < destWidth * destHeight * 4; i += 4)
+        dest[i] = 255;
+    
     doRandomTiling(dest);
     replaceWithBestOverlap(dest, true);
 }
@@ -46,12 +54,15 @@ void Texture::replaceWithBestOverlap(uint8_t* dest, bool doCut) {
 
     // figure out where the last tile started.
     unsigned int startAt = (destHeight / increm) * increm;
+    unsigned int startAtW = (destWidth / increm) * increm;
     
     for (int y = startAt; y >= 0; y -= increm) {
-        for (int x = startAt; x >= 0; x -= increm) {
+        for (int x = startAtW; x >= 0; x -= increm) {
             // for the tile starting at x,y, we need to find a new tile
             // to replace it with. this new tile should have the lowest possible
             // error with the overlapped region.
+
+            
             unsigned int bx, by;
             getIndexOfBestReplacementTile(dest, x, y,
                                           &bx, &by);
@@ -66,6 +77,25 @@ void Texture::replaceWithBestOverlap(uint8_t* dest, bool doCut) {
             }
 
             //printf("corrected tile row = %d, col = %d\n", y, x);
+        }
+    }
+
+    // if the corrosp image is white (or transparent), make the dest image
+    // the same.
+    if (corro == NULL)
+        return;
+    
+    for (int y = 0; y < destHeight; y++) {
+        for (int x = 0; x < destWidth; x++) {
+            if (corro[IMG_INDEX(x, y, 0, destWidth)] > 240 &&
+                corro[IMG_INDEX(x, y, 1, destWidth)] > 240 &&
+                corro[IMG_INDEX(x, y, 2, destWidth)] > 240) {
+
+                dest[IMG_INDEX(x, y, 0, destWidth)] = 255;
+                dest[IMG_INDEX(x, y, 1, destWidth)] = 255;
+                dest[IMG_INDEX(x, y, 2, destWidth)] = 255;
+            }
+            dest[IMG_INDEX(x, y, 3, destWidth)] = corro[IMG_INDEX(x, y, 3, destWidth)];
         }
     }
 }
@@ -458,6 +488,7 @@ void Texture::copyTile(unsigned int srcX, unsigned int srcY,
                     data + IMG_INDEX(srcX, srcY + y, 0, width),
                     4 * copyWidth);
     }
+    
 
 
 }
