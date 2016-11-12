@@ -3,16 +3,19 @@
   <head>
     <meta charset="utf-8">
     <title>title</title>
-    <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Dosis:400,700,800|Open+Sans:800" rel="stylesheet">
+
+
 
 
     <script src="textures.js"></script>
     <script src="bundle.js"></script>
-    
+
   </head>
   <body>
     <div id="app">
@@ -28,53 +31,52 @@
       <div class="row">
         <div class="col-md-6">
           <div id="textures">
+            <h2> Textures</h2>
           </div>
         </div>
         <div class="col-md-6">
-          <div id="images">
-            <ul class="nav nav-tabs">
-              <li class="active"><a data-toggle="tab" href="#predefinedmenu">Predefined</a></li>
-              <li><a data-toggle="tab" href="#bingitmenu">BingIt</a></li>
-              <li><a data-toggle="tab" href="#webcammenu">Webcam</a></li>
-            </ul>
+          <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#predefinedmenu">Predefined</a></li>
+            <li><a data-toggle="tab" href="#bingitmenu">BingIt</a></li>
+            <li><a data-toggle="tab" href="#webcammenu">Webcam</a></li>
+          </ul>
 
-            <div class="tab-content">
-              <div id="predefinedmenu" class="tab-pane fade in active">
-                <h3>HOME</h3>
-                <p>Some content.</p>
-              </div>
-              <div id="bingitmenu" class="tab-pane fade">
-                <h3>Bing search</h3>
-                <div id="bing">
-                  <div class="form-inline">
-                    <div class="form-group">
-                      <label for="bingSearchTerm">Search Term</label>
-                      <input type="text" class="form-control" id="bingSearchTerm" placeholder="cats" v-model="bingSearchTerm">
-                    </div>
-                    <button type="button" class="btn btn-default" v-on:click="bingIt">Search for images</button>
+          <div class="tab-content">
+            <div id="predefinedmenu" class="tab-pane fade in active">
+              <h2>Home</h2>
+              <p>Some content.</p>
+            </div>
+            <div id="bingitmenu" class="tab-pane fade">
+              <h2>Bing search</h2>
+              <div id="bing">
+                <div class="form-inline">
+                  <div class="form-group">
+                    <label for="bingSearchTerm">Search Term</label>
+                    <input type="text" class="form-control" id="bingSearchTerm" placeholder="cats" v-model="bingSearchTerm">
                   </div>
-
-                  <div class="row" v-for="(resultRow, idx1) in bingResultsAll">
-                    <div class="bingResults col-md-4" v-for="(url, idx2) in resultRow">
-		      <img :id="idx1 + 'x' + idx2"
-                           v-on:click="selectImage(idx1 + 'x' + idx2)"
-                           class="img-responsive" v-bind:src="url" :id="url">
-                    </div>
-                  </div>
+                  <button type="button" class="btn btn-default" v-on:click="bingIt">Search for images</button>
                 </div>
 
+                <div class="row" v-for="(resultRow, idx1) in bingResultsAll">
+                  <div class="bingResults col-md-4" v-for="(url, idx2) in resultRow">
+		    <img :id="idx1 + 'x' + idx2"
+                         v-on:click="selectImage(idx1 + 'x' + idx2)"
+                         class="img-responsive" v-bind:src="url" :id="url">
+                  </div>
+                </div>
               </div>
-              <div id="webcammenu" class="tab-pane fade">
-                <h3>Your face!</h3>
-                <video id="video" width="320" height="240" autoplay></video>
-                <button id="snap" v-on:click="takePhoto">Snap Photo</button>
-               
-              </div>
+              
+            </div>
+            
+            <div id="webcammenu" class="tab-pane fade">
+              <h3>Your face!</h3>
+              <video id="video" width="320" height="240" autoplay></video>
+              <button id="snap" v-on:click="takePhoto()">Snap Photo</button>
             </div>
           </div>
+
         </div>
       </div>
-      
     </div>
   </body>
   <script src="script.js"></script>
