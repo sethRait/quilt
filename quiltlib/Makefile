@@ -5,7 +5,7 @@ local: cpp/*
 
 
 bundle.js: node_modules js/*
-	./node_modules/browserify/bin/cmd.js -d js/index.js -o bundle.js
+	./node_modules/browserify/bin/cmd.js -d js/index.js -t babelify -t uglifyify -o bundle.js
 
 textures.js: cpp/*
 	emcc -s EXPORTED_FUNCTIONS="['_doSynth', '_doTransfer', '_malloc']" -O3 -Wall -std=c++11 cpp/textures.cpp -o textures.js

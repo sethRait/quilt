@@ -23,22 +23,23 @@ int main(int argc, char** argv) {
     
 
     uint8_t* src = (uint8_t*) malloc(width * height * 4);
-    uint8_t* dest = (uint8_t*) malloc(256 * 256 * 4);
-    uint8_t* corro = (uint8_t*) malloc(256 * 256 * 4);
+    uint8_t* dest = (uint8_t*) malloc(w2 * h2 * 4);
+    uint8_t* corro = (uint8_t*) malloc(w2 * h2 * 4);
     for (unsigned int i = 0; i < width * height * 4; i++) {
         src[i] = image[i];
     }
 
-    for (unsigned int i = 0; i < 256 * 256; i++) {
+    for (unsigned int i = 0; i < w2 * h2 * 4; i++) {
         dest[i] = 0;
         corro[i] = image2[i];
     }
     
 
     Texture t(width, height, src);
+    t.setCorroImg(corro);
     t.setTileSize(20);
     t.setOverlapAmount(4);
-    t.setDestDimensions(256, 256);
+    t.setDestDimensions(w2, h2);
     t.synthesize(dest);
         
     

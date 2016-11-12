@@ -9,6 +9,8 @@ class Texture {
     unsigned int destWidth, destHeight;
     uint8_t* data;
 
+    double minCorro, maxCorro, minText, maxText;
+
     uint8_t* corro;
     double alpha;
     
@@ -32,6 +34,8 @@ private:
 
     uint8_t getPixelLum(uint8_t* firstChannel);
 
+    void computeMinMaxLum();
+    
     void copyTile(unsigned int srcX, unsigned int srcY,
                   unsigned int destX, unsigned int destY,
                   uint8_t* dest,
