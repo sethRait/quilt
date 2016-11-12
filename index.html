@@ -50,7 +50,7 @@
 
                                     <div class="row" v-for="resultRow in bingResultsAll">
                                         <div class="bingResults col-md-4" v-for="url in resultRow">
-                                            <img class="img-responsive" v-bind:src="url"></img>
+											<img v-on:click="selectImage" class="img-responsive" v-bind:src="url" :id="url"></img>
                                         </div>
                                     </div>
                                 </div>

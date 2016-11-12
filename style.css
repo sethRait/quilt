@@ -4,6 +4,11 @@ canvas {
 
 .img-responsive {
 	overflow: none;
+	padding: 1em;
+}
+
+#app {
+	padding: 1em;
 }
 
 #plzw8 {

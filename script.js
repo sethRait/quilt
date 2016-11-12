@@ -7,6 +7,7 @@ var app = new Vue({
 	bingResults3: [],
 	bingResultsAll: [],
         bingSearchTerm: "",
+	image2: "",
         waiting: false
     },
     methods: {
@@ -35,9 +36,13 @@ var app = new Vue({
                     ctx.putImageData(e, 0, 0);
                     this.waiting = false;
                 }).catch(console.log);
-
-
             
-        }
+        },
+        
+	selectImage: function(img){
+            this.image2 = img.srcElement.src;
+	    alert(this.image2);
+	}
+
     }
-})
+});
