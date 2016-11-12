@@ -11,10 +11,13 @@ var app = new Vue({
             if (typeof(w) == "undefined") {
                 w = new Worker("worker.js");
             }
-            w.postMessage(ctx.getImageData(10,10,50,50));
-            console.log(ctx.getImageData(10,10,50,50));
+            w.postMessage(ctx.getImageData(0,0,800,300));
             w.onmessage = function(event){
-                document.getElementById("result").innerHTML = event.data;
+                var c2 = document.getElementById("test");
+                var ctx2 = c2.getContext("2d");
+                var array = event.data.data;
+                var idata = new ImageData(array, 800,300);
+                ctx2.putImageData(idata, 0, 0);
             };
         }
     }
