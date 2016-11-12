@@ -41,6 +41,7 @@ function transfer(textureData, imgData, alpha, tileSize, overlap) {
     return new ImageData(dView, width, height);
 }
 
+module.exports.transferFromCanvas = transferFromCanvas;
 function transferFromCanvas(textureURL, imgCanvas, alpha, tileSize, overlap) {
     return image_utils.getImage(textureURL)
         .then((d) => {
@@ -50,6 +51,7 @@ function transferFromCanvas(textureURL, imgCanvas, alpha, tileSize, overlap) {
         });
 }
 
+module.exports.transferFromURL = transferFromURL;
 function transferFromURL(textureURL, imgURL, alpha, tileSize, overlap) {
     return q.all([image_utils.getImage(textureURL),
                   image_utils.getImage(imgURL)])
@@ -81,6 +83,24 @@ function synth() {
             return new ImageData(dView, width, height);
         });
 }
+
+
+self.addEventListener('message', function(msg) {
+    var e = msg.data;
+    var p;
+    if (e.type == "url") {
+        p = transferFromURL(e.textureURL, e.imageURL, e.alpha,
+                           e.tileSize, e.overlap);
+    } else if (e.type == "canvas") {
+        p = transferFromCanvas(e.textureURL, e.imgData, e.alpha,
+                              e.tileSize, e.overlap);
+    }
+
+    p.then(function (d) {
+        self.postMessage({data: d});        
+    });
+
+});
 
 
 window.transferFromURL = transferFromURL;

@@ -8,40 +8,46 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
+    <script src="textures.js"></script>
+    <script src="bundle.js"></script>
+    
   </head>
   <body>
-        <div id="app">
-            <div class="row">
-                <div class="col-md-6">
-                    <div id="textures">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div id="images">
-                        <div id="bing">
-                            <div class="form-inline">
-                                <div class="form-group">
-                                    <label for="bingSearchTerm">Search Term</label>
-                                    <input type="text" class="form-control" id="bingSearchTerm" placeholder="cats" v-model="bingSearchTerm">
-                                </div>
-                                <button type="button" class="btn btn-default" v-on:click="bingIt">Search for images</button>
-                            </div>
+    <div id="app">
 
-							<div class="row" v-for="resultRow in bingResultsAll">
-                            	<div class="bingResults col-md-4" v-for="url in resultRow">
-                                	<img class="img-responsive" v-bind:src="url"></img>
-								</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- <button v-on:click="startWorker"> Start Worker </button>
-            <canvas id="simple_sketch" width="800" height="300"></canvas>
-            <canvas id="test" width="800" height="300"></canvas> -->
+      <div v-show="waiting" id="plzw8"><h1>BOLD YOUR COURSES!</h1></div>
+      
+      <div class="row">
+        <div class="col-md-6">
+          <div id="textures">
+          </div>
         </div>
-    </body>
-    <script src="script.js"></script>
-	<script src="bing.js"></script>
+        <div class="col-md-6">
+          <div id="images">
+            <div id="bing">
+              <div class="form-inline">
+                <div class="form-group">
+                  <label for="bingSearchTerm">Search Term</label>
+                  <input type="text" class="form-control" id="bingSearchTerm" placeholder="cats" v-model="bingSearchTerm">
+                </div>
+                <button type="button" class="btn btn-default" v-on:click="bingIt">Search for images</button>
+              </div>
+
+	      <div class="row" v-for="resultRow in bingResultsAll">
+                <div class="bingResults col-md-4" v-for="url in resultRow">
+                  <img class="img-responsive" v-bind:src="url"></img>
+		</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button v-on:click="startWorker"> Start Worker </button>
+      <!--<canvas id="simple_sketch" width="800" height="300"></canvas>-->
+      <canvas id="test" width="800" height="800"></canvas> 
+    </div>
+  </body>
+  <script src="script.js"></script>
+  <script src="bing.js"></script>
 </html>

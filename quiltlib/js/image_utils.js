@@ -27,3 +27,4 @@ function getImage(url) {
 
     return toR.promise;
 }
+
