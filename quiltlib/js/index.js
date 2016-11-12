@@ -10,6 +10,7 @@ const texture = {
 
 console.log(Object.keys(texture));
 
+
 function transfer(textureURL, imgURL, alpha, tileSize, overlap) {
     return q.all([image_utils.getImage(textureURL),
                   image_utils.getImage(imgURL)])
