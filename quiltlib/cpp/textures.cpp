@@ -37,8 +37,8 @@ void Texture::synthesize(uint8_t* dest) {
     
     doRandomTiling(dest);
     
-    /*if (corro != NULL)
-      computeMinMaxLum();*/
+    if (corro != NULL)
+      computeMinMaxLum();
     
     replaceWithBestOverlap(dest, true);
 }
