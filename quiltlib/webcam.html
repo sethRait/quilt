@@ -1,58 +1,107 @@
-<html>
+<html lang="en">
   <head>
     <title>Texture Synthesis and Transfer</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link href="webcam.css" rel="stylesheet" type="text/css" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
+    <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+    
     <script src="textures.js"></script>
     <script src="bundle.js"></script>
-    <script>
-      // talie_textures/Lemon2.png, 0.5 14 4
-      // talie_textures/Chicken_Nugget2.png 0.6 10 4
-      /*document.addEventListener("DOMContentLoaded", function() {
-      transfer("/talie_textures/Chicken_Nugget2.png", "/images/potato.png", 0.6, 10, 4).then(function(d) {
-      console.log("done!");
-      document.getElementById("dest").getContext("2d").putImageData(d, 0, 0);
-      }).catch((e) => {
-      console.error(e);
-      });
-      });*/
-
-document.addEventListener("DOMContentLoaded", function () {
-// Grab elements, create settings, etc.
-var video = document.getElementById('video');
-
-// Get access to the camera!
-if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-    // Not adding `{ audio: true }` since we only want video now
-      navigator.mediaDevices.getUserMedia({ video: true })
-      .then(function(stream) {
-        video.src = window.URL.createObjectURL(stream);
-        video.play();
-    }).catch(function (e) { console.log(e); });
-      }
-
-
-      var canvas = document.getElementById('canvas');
-      var context = canvas.getContext('2d');
-      
-// Trigger photo take
-document.getElementById("snap").addEventListener("click", function() {
-      context.drawImage(video, 0, 0, 320, 240);
-      var corro = context.getImageData(0, 0,
-      canvas.width, canvas.height);
-      transferFromCanvas("/images/Food.0010.png", corro, 0.5,
-      8, 2).then(function(imd) {
-      context.putImageData(imd, 0, 0);
-      console.log("drawn!");
-      }).catch(console.log);
-
-});
-      });
-    </script>
+    <script src="webcam.js"></script>
+    
   </head>
 
   <body>
-    <video id="video" width="320" height="240" autoplay></video>
-    <button id="snap">Snap Photo</button>
-    <canvas id="canvas" width="320" height="240"></canvas>
+
+    <div id="coverup">
+      <h1>Please wait... (sorry!)</h1>
+    </div>
+    
+    <div class="container">
+      <div class="row">
+        <div id="topHeader" class="col-sm-12 text-center">
+          <h1>First, take a picture...</h1>
+        </div>
+      </div>
+    </div>
+    <div class="container" style="padding-top: 40px;">
+      <div class="row">
+        <div class="col-sm-4 text-center col-sm-offset-2">
+          <video id="video" width="320" height="240" autoplay></video>
+        </div>
+        
+        <div class="col-sm-4 text-center">
+          <canvas id="canvas" width="320" height="240"></canvas>
+        </div>
+      </div>
+
+      <div class="col-sm-12" style="padding-top: 30px; text-align: center;">
+        <button id="snap">Snap Photo</button>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 text-center">
+          <h1>Second, select a texture...</h1>
+        </div>
+      </div>
+    </div>
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 text-center">
+          <a id="l1" href="javascript:do1();">
+            <img class="img-rounded texture" src="talie_textures/Lemon2.png">
+          </a>
+          <a id="l2" href="javascript:do2();">
+            <img class="img-rounded texture" src="images/Food.0004.png">
+          </a>
+          <a id="l3" href="javascript:do3();">
+            <img class="img-rounded texture" src="images/Clouds.0000.png">
+          </a>
+          <a id="l4" href="javascript:do4();">
+            <img class="img-rounded texture" src="images/Fabric.0005.png">
+          </a>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-sm-12 text-center">
+          <a id="l4" href="javascript:do5();">
+            <img class="img-rounded texture" src="images/Metal.0005.png">
+          </a>
+          <a id="l5" href="javascript:do6();">
+            <img class="img-rounded texture" src="images/Fabric.0008.png">
+          </a>
+          <a id="l6" href="javascript:do7();">
+            <img class="img-rounded texture" src="images/Leaves.0013.png">
+          </a>
+          <a id="l7" href="javascript:do8();">
+            <img class="img-rounded texture" src="images/Paintings.1.0000.png">
+          </a>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
+
+<!--
+    // talie_textures/Lemon2.png, 0.5 14 4
+    // talie_textures/Chicken_Nugget2.png 0.6 10 4
+    // images/Clouds.0000.png 0.9 10 6 SUPER SLOW
+    // images/Fabric.0005.png 0.6 12 4
+    // images/Metal.0005.png 0.5 12 4
+    // images/Fabric.0008.png 0.35 10 3
+    // images/Leaves.00013.png 0.85 6 2
+  -->

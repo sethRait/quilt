@@ -119,7 +119,7 @@ void Texture::replaceWithBestOverlap(uint8_t* dest, bool doCut) {
     if (corro == NULL)
         return;
     
-    for (unsigned int y = 0; y < destHeight; y++) {
+    /*for (unsigned int y = 0; y < destHeight; y++) {
         for (unsigned int x = 0; x < destWidth; x++) {
             if (corro[IMG_INDEX(x, y, 0, destWidth)] > 245 &&
                 corro[IMG_INDEX(x, y, 1, destWidth)] > 245 &&
@@ -131,7 +131,7 @@ void Texture::replaceWithBestOverlap(uint8_t* dest, bool doCut) {
             }
             dest[IMG_INDEX(x, y, 3, destWidth)] = corro[IMG_INDEX(x, y, 3, destWidth)];
         }
-    }
+        }*/
 }
 
 void Texture::getIndexOfBestReplacementTile(uint8_t* dest,

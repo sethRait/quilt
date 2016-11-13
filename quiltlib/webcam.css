@@ -1,0 +1,23 @@
+.texture {
+    margin: 10px;
+}
+
+#coverup {
+    position: absolute:
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    bottom: 0px;
+    background-color: #AAAAAA;
+    text-align: center;
+    padding-top: 20px;
+    display: none;
+}
+
+#topHeader {
+    padding-top: 10px;
+}
+
+h1 {
+    
+}

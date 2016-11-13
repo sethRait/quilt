@@ -44,7 +44,7 @@ var app = new Vue({
                 
             } else if (opts.type == "urls") {
                 transferFromURL(this.textureURL,
-                                "/quiltlib/images/soapy.png",
+                                opts.corroURL,
                                 0.5, 16, 4)
                     .then((e) => {
                         ctx.putImageData(e, 0, 0);
@@ -55,17 +55,10 @@ var app = new Vue({
         
 	selectImage: function(id){
             var img = document.getElementById(id);
+            console.log("/bing/?url=" + encodeURIComponent(img.src));
 
-            var canvas = document.createElement('canvas');
-            var context = canvas.getContext('2d');
-
-            canvas.width = img.width;
-            canvas.height = img.height;
-            context.drawImage(img, 0, 0 );
-            var corro = context.getImageData(0, 0, img.width, img.height);
-            
-            this.startWorker({"type": canvas,
-                              "imgData": corro});
+            this.startWorker({"type": "urls",
+                              "corroURL": "/bing/?url=" + encodeURIComponent(img.src)});
 	},
 
         takePhoto: function() {
