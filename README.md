@@ -13,7 +13,7 @@ We can take a texture like this:
 
 ## What it does
 
-It uses a machine learning / energy minimization algorithm (specifically, loopy belief propagation over a finite Markov field with a few heuristics) in order to a model a transposition of a texture onto another natural image.
+It uses a machine learning / energy minimization algorithm in order to a model a transposition of a texture onto another natural image.
 
 Our web demo lets users take pictures from their webcams and retexture them using a number of default options.
 
