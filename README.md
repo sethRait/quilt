@@ -11,6 +11,8 @@ We can take a texture like this:
 
 ![Lemon potato](http://i.imgur.com/0Nyl7ub.png)
 
+![Examples](http://i.imgur.com/WhS8p4Z.png)
+
 ## What it does
 
 It uses a machine learning / energy minimization algorithm in order to a model a transposition of a texture onto another natural image.
